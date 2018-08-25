@@ -1,11 +1,13 @@
 var express = require("express");
-var router = express.Router();
+// var router = express.Router();
+var router  = express.Router({mergeParams: true});
 var Campground = require("../models/campground");
 var Comment = require("../models/comment");
 var middleware = require("../middleware");
 
 // Comments New
-router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req, res){
+// router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req, res){
+router.get("/new",middleware.isLoggedIn, function(req, res){
     // find campground by id
     Campground.findById(req.params.id, function(err, campground){
        if(err){

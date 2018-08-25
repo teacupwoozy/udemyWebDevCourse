@@ -2,6 +2,7 @@ var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
+    flash       = require("connect-flash"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
@@ -19,7 +20,8 @@ mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
-app.use(methodOverride("_method"));
+app.use(methodOverride("_method"))
+app.use(flash());
 // seedDB(); seed the database
 
 // PASSPORT CONFIG
@@ -38,10 +40,6 @@ app.use(function(req, res, next){
    res.locals.currentUser = req.user;
    next();
 });
-
-// app.use(authRoutes);
-// app.use(commentRoutes);
-// app.use("/campgrounds/:id", campgroundRoutes);
 
 app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
